@@ -20,6 +20,7 @@ public class call extends HttpServlet {
   private static final long serialVersionUID = 1L;
   private static final String DEFAULT_URL = "http://scanme.nmap.org";
   private static final String[] HTTP_ACCEPTABLE_RESPONSE_CODES = {"200", "301", "302"};
+  private static final String HTTP_GET = "GET";
 
   /**
    * @see HttpServlet#HttpServlet()
@@ -46,7 +47,7 @@ public class call extends HttpServlet {
     try {
       URL url = new URL(requestUrl);
       HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-      connection.setRequestMethod("GET");
+      connection.setRequestMethod(HTTP_GET);
       connection.setRequestProperty("Accept", "application/json");
 
       if (Arrays.asList(HTTP_ACCEPTABLE_RESPONSE_CODES).contains(connection.getResponseCode())) {
