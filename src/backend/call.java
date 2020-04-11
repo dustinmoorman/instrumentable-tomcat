@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/call")
 public class call extends HttpServlet {
   private static final long serialVersionUID = 1L;
+  private static final String DEFAULT_URL = "http://scanme.nmap.org";
 
   /**
    * @see HttpServlet#HttpServlet()
@@ -34,7 +35,7 @@ public class call extends HttpServlet {
 
     if (requestUrl == null) {
     	out.println("Url not provided to servlet, running with the default");
-    	requestUrl = "http://scanme.nmap.org";
+    	requestUrl = DEFAULT_URL;
     } else {
       out.println("Url provided in request.");
     }
