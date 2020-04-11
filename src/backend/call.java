@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.net.HttpURLConnection;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class call extends HttpServlet {
   private static final long serialVersionUID = 1L;
   private static final String DEFAULT_URL = "http://scanme.nmap.org";
+  private static final String[] HTTP_ACCEPTABLE_RESPONSE_CODES = {"200", "301", "302"};
 
   /**
    * @see HttpServlet#HttpServlet()
@@ -46,6 +48,11 @@ public class call extends HttpServlet {
       HttpURLConnection connection = (HttpURLConnection) url.openConnection();
       connection.setRequestMethod("GET");
       connection.setRequestProperty("Accept", "application/json");
+
+      if (Arrays.asList(HTTP_ACCEPTABLE_RESPONSE_CODES).contains(connection.getResponseCode())) {
+        throw new RuntimeException("Downstream HTTP request failed with response code: "
+            + connection.getResponseCode());
+      }
     } catch (Exception e) {
       out.println("An error has occurred in the web request: " + e.getMessage());
     }
