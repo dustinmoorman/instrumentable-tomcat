@@ -7,6 +7,7 @@
 <title>Debug</title>
 </head>
 <body>
-
+<% java.util.Date time = new java.util.Date(); %>
+<%="Debugging at " + time %>
 </body>
 </html>
