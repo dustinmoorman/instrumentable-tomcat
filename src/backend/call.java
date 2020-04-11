@@ -2,6 +2,8 @@ package backend;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URL;
+import java.net.HttpURLConnection;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,8 +29,19 @@ public class call extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String requestUrl = request.getParameter("url");
+		
 		PrintWriter out = response.getWriter();
-		out.println("Url: " + request.getParameter("url"));
+		out.println("Url: " + requestUrl);
+		
+		try {
+			URL url = new URL(requestUrl);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("GET");
+			connection.setRequestProperty("Accept", "application/json");
+		} catch (Exception e) {
+			out.println("An error has occurred in the web request: " + e.getMessage());
+		}
 	}
 
 	/**
