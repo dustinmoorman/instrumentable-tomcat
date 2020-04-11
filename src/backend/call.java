@@ -16,39 +16,38 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/call")
 public class call extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public call() {
-        super();
-    }
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * @see HttpServlet#HttpServlet()
+   */
+  public call() {
+    super();
+  }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String requestUrl = request.getParameter("url");
+  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    String requestUrl = request.getParameter("url");
 		
-		PrintWriter out = response.getWriter();
-		out.println("Url: " + requestUrl);
+    PrintWriter out = response.getWriter();
+    out.println("Url: " + requestUrl);
 		
-		try {
-			URL url = new URL(requestUrl);
-			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("GET");
-			connection.setRequestProperty("Accept", "application/json");
-		} catch (Exception e) {
-			out.println("An error has occurred in the web request: " + e.getMessage());
-		}
-	}
+    try {
+      URL url = new URL(requestUrl);
+      HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+      connection.setRequestMethod("GET");
+      connection.setRequestProperty("Accept", "application/json");
+    } catch (Exception e) {
+      out.println("An error has occurred in the web request: " + e.getMessage());
+    }
+}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-
+  /**
+   * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+   */
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    doGet(request, response);
+  }
 }
