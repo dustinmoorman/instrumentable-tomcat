@@ -29,11 +29,17 @@ public class call extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    String requestUrl = request.getParameter("url");
-		
     PrintWriter out = response.getWriter();
+    String requestUrl = request.getParameter("url");
+
+    if (requestUrl == null) {
+    	out.println("Url not provided to servlet, running with the default");
+    	requestUrl = "http://scanme.nmap.org";
+    } else {
+      out.println("Url provided in request.");
+    }
     out.println("Url: " + requestUrl);
-		
+
     try {
       URL url = new URL(requestUrl);
       HttpURLConnection connection = (HttpURLConnection) url.openConnection();
