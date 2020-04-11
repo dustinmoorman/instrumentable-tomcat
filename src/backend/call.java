@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,7 +55,21 @@ public class call extends HttpServlet {
       if (Arrays.asList(HTTP_ACCEPTABLE_RESPONSE_CODES).contains(connection.getResponseCode())) {
         throw new RuntimeException("Downstream HTTP request failed with response code: "
             + connection.getResponseCode());
+      } else {
+        out.println(":: Connected successfully to " + requestUrl + "...");
+        out.println("----------------------------------------------------------------");
       }
+      
+      BufferedReader buffer = new BufferedReader(
+          new InputStreamReader(connection.getInputStream())
+      );
+      
+      String pageOut;
+      while ((pageOut = buffer.readLine()) != null) {
+        out.println(pageOut);
+      }
+      
+      connection.disconnect();
     } catch (Exception e) {
       out.println("An error has occurred in the web request: " + e.getMessage());
     }
