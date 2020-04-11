@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Debug</title>
+<title>Default</title>
 </head>
 <body>
 <% java.util.Date time = new java.util.Date(); %>
-<%="Debugging at " + time %>
+<%="Arriving at " + time %>
 </body>
 </html>

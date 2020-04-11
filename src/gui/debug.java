@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,8 +31,9 @@ public class debug extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
+		Date time = new Date();
 		out.println("<html>");
-		out.println("<b>Debug</b>");
+		out.println("<b>Debugging at " + time + "</b>");
 		out.println("</html>");
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
