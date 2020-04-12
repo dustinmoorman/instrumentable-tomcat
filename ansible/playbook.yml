@@ -23,3 +23,9 @@
         mysql -u root -p"{{ mysql_root_password }}" < /tmp/init_db.sql
       args:
         creates: /tmp/init_db.sql
+
+    - name: Restart MySQL service
+      service:
+        name: mysql
+        state: restarted
+        enabled: true
