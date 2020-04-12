@@ -96,7 +96,6 @@
         xpath: /controller-info/account-access-key
         value: "{{ account_access_key }}"
 
-
     - name: Create Machine Agent Directory
       file:
         path: "{{ machine_agent_directory }}"
@@ -130,3 +129,58 @@
       args:
         creates: "/lib/systemd/system/{{ machine_agent_systemd_service_name }}.service"
 
+    - name: Create Network Agent Directory
+      file:
+        path: "{{ netviz_agent_directory }}"
+        state: directory
+        mode: "0755"
+
+    - name: Download & decompress AppDynamics Network Agent
+      unarchive:
+        src: "{{ netviz_agent_source }}"
+        dest: "{{ netviz_agent_directory }}"
+        remote_src: yes
+
+    - name: Install AppDynamics Network Agent
+      shell: |
+        bash -c "{{ netviz_agent_directory }}/install.sh"
+        touch "{{ netviz_agent_directory }}/netviz.installed"
+      args:
+        creates: "{{ netviz_agent_directory }}/netviz.installed"
+
+    - name: Configure Network Agent in systemd
+      shell: |
+        cat << EOF > "/lib/systemd/system/{{ netviz_agent_systemd_service_name }}.service"
+        [Unit]
+        Description=AppDynamics Network Agent
+
+        [Service]
+        ExecStart={{ netviz_agent_directory }}/bin/start.sh
+        KillMode=control-group
+        Restart=on-failure
+        RestartPreventExitStatus=255
+        Type=forking
+        TimeoutSec=900
+
+        [Install]
+        WantedBy=multi-user.target
+        Alias={{ netviz_agent_systemd_service_name}}.service
+        EOF
+      args:
+        creates: "/lib/systemd/system/{{ netviz_agent_systemd_service_name }}.service"
+
+    - name: Reload systemd
+      systemd:
+        daemon_reload: yes
+
+    - name: Start Machine Agent service
+      service:
+        name: "{{ machine_agent_systemd_service_name }}"
+        enabled: true
+        state: restarted
+
+    - name: Start Network Agent service
+      service:
+        name: "{{ netviz_agent_systemd_service_name }}"
+        enabled: true
+        state: restarted
