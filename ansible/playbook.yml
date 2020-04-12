@@ -29,3 +29,69 @@
         name: mysql
         state: restarted
         enabled: true
+
+    - name: Create AppDynamics Directory
+      file:
+        path: "{{ appdynamics_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Create AppDynamics Java Agent Installer Directory
+      file:
+        path: "{{ java_agent_directory }}" 
+        state: directory
+        mode: "0755"
+
+    - name: Download & decompress AppDynamics Java Agent
+      unarchive:
+        src: "{{ java_agent_source }}"
+        dest: "{{ java_agent_directory }}"
+        remote_src: yes
+
+    - name: Create AppDynamics Agent Log Directory for node
+      file:
+        path: "{{ java_agent_directory }}/{{ java_agent_version_directory }}/logs/{{ node_name }}"
+        state: directory
+        mode: "0755"
+
+    - name: Write controller host to configuration file
+      xml:
+        path: "{{ java_agent_directory }}/{{ java_agent_version_directory }}/conf/controller-info.xml"
+        xpath: /controller-info/controller-host
+        value: "{{ controller_host }}"
+
+    - name: Write controller port to configuration file
+      xml:
+        path: "{{ java_agent_directory }}/{{ java_agent_version_directory }}/conf/controller-info.xml"
+        xpath: /controller-info/controller-port
+        value: "{{ controller_port }}"
+
+    - name: Write application name to configuration file
+      xml:
+        path: "{{ java_agent_directory }}/{{ java_agent_version_directory }}/conf/controller-info.xml"
+        xpath: /controller-info/application-name
+        value: "{{ application_name }}"
+
+    - name: Write tier name to configuration file
+      xml:
+        path: "{{ java_agent_directory }}/{{ java_agent_version_directory }}/conf/controller-info.xml"
+        xpath: /controller-info/tier-name
+        value: "{{ tier_name }}"
+
+    - name: Write node name to configuration file
+      xml:
+        path: "{{ java_agent_directory }}/{{ java_agent_version_directory }}/conf/controller-info.xml"
+        xpath: /controller-info/node-name
+        value: "{{ node_name }}"
+
+    - name: Write account name to configuration file
+      xml:
+        path: "{{ java_agent_directory }}/{{ java_agent_version_directory }}/conf/controller-info.xml"
+        xpath: /controller-info/account-name
+        value: "{{ account_name }}"
+
+    - name: Write account access key to configuration file
+      xml:
+        path: "{{ java_agent_directory }}/{{ java_agent_version_directory }}/conf/controller-info.xml"
+        xpath: /controller-info/account-access-key
+        value: "{{ account_access_key }}"
