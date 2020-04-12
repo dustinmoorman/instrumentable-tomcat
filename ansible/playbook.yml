@@ -1,5 +1,5 @@
 ---
-- hosts: jenkins
+- hosts: tomcat
   tasks:
     - name: Set MySQL default password in debconf
       shell: |
@@ -13,8 +13,8 @@
       apt: upgrade=dist force_apt_get=yes
 
     - name: Install required packages
-      apt: 
-        name: "{{ required_packages }}" 
+      apt:
+        name: "{{ required_packages }}"
         state: present
 
     - name: Create MySQL init script
