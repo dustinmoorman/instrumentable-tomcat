@@ -48,7 +48,7 @@ public class call extends HttpServlet {
 
     try {
       logger requestLogger = new logger();
-      requestLogger.logRequest(request);
+      requestLogger.logRequest(request, requestUrl);
       
       URL url = new URL(requestUrl);
       

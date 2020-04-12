@@ -11,12 +11,13 @@ public class logger {
   private static final String MYSQL_CONNECTION_STRING = "jdbc:mysql://root:appdynam1cs@localhost:3306/instrumentdata?serverTimezone=America/Chicago&useJDBCCompliantTimezoneShift=true";
 
   public logger() throws ClassNotFoundException, SQLException {
+
     Class.forName("com.mysql.cj.jdbc.Driver");
 
     Connection connection = DriverManager.getConnection(MYSQL_CONNECTION_STRING);
-    
+
     Statement createTableStatement = connection.createStatement();
-    String createTableDML = "CREATE TABLE IF NOT EXISTS `request_logs` ("
+    String createTableDDL = "CREATE TABLE IF NOT EXISTS `request_logs` ("
       + "id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY, "
       + "remote_host_name VARCHAR(255), "
       + "remote_host_ip VARCHAR(255) NOT NULL, "
@@ -24,15 +25,25 @@ public class logger {
       + "date TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
       + ");";
     
-    createTableStatement.executeUpdate(createTableDML);
+    createTableStatement.executeUpdate(createTableDDL);
     
     connection.close();
   }
   
-  public void logRequest(HttpServletRequest request) throws ClassNotFoundException, SQLException {
-    
+  public void logRequest(HttpServletRequest request, String targetUrl) throws ClassNotFoundException, SQLException {
+
     Class.forName("com.mysql.cj.jdbc.Driver");  
     Connection connection = DriverManager.getConnection(MYSQL_CONNECTION_STRING);
+
+    Statement insertRequestStatement = connection.createStatement();
+    String insertRequestDQL = "INSERT INTO `request_logs` ("
+      + "remote_host_name, remote_host_ip, target_url) "
+      + "VALUES ( '" 
+      + request.getRemoteHost() + "', '" 
+      + request.getRemoteAddr() + "', '"
+      + targetUrl + "');";
+
+    insertRequestStatement.executeUpdate(insertRequestDQL);
     
     connection.close();
   }
