@@ -37,7 +37,6 @@ public class call extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     PrintWriter out = response.getWriter();
     String requestUrl = request.getParameter("url");
-    logger requestLogger = new logger();
     
     if (requestUrl == null) {
     	out.println("Url not provided to servlet, running with the default");
@@ -48,8 +47,11 @@ public class call extends HttpServlet {
     out.println("Url: " + requestUrl);
 
     try {
+      logger requestLogger = new logger();
       requestLogger.logRequest(request);
+      
       URL url = new URL(requestUrl);
+      
       HttpURLConnection connection = (HttpURLConnection) url.openConnection();
       connection.setRequestMethod(HTTP_GET);
       connection.setRequestProperty("Accept", "application/json");
