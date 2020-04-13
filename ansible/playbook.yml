@@ -107,7 +107,6 @@
         dest: "{{ java_agent_directory }}"
         remote_src: yes
 
-
     - name: Create AppDynamics Agent Log Directory for node
       file:
         path: "{{ java_agent_directory }}/{{ java_agent_version_directory }}/logs/{{ node_name }}"
