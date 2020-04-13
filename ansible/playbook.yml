@@ -76,6 +76,15 @@
       args:
         creates: "/lib/systemd/system/{{ tomcat_systemd_service_name }}.service"
 
+    - name: Send WAR file to remote Tomcat
+      copy:
+        src: "{{ war_file_local_source }}"
+        dest: "{{ tomcat_directory }}/latest/webapps/"
+        owner: tomcat
+        group: tomcat
+        mode: '0744'
+        force: yes
+
     - name: Create MySQL init script
       shell: |
         echo "create database if not exists instrumentdata;" > /tmp/init_db.sql
