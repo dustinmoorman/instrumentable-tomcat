@@ -63,7 +63,7 @@
         Environment=CATALINA_HOME=/opt/tomcat/latest
         Environment=CATALINA_BASE=/opt/tomcat/latest
         Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
-        Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
+        Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -javaagent:{{ java_agent_directory }}/{{ java_agent_version_directory }}/javaagent.jar'
         UMask=0007
         RestartSec=10
         Restart=always
@@ -177,6 +177,18 @@
         path: "{{ java_agent_directory }}/{{ java_agent_version_directory }}/conf/controller-info.xml"
         xpath: /controller-info/account-access-key
         value: "{{ account_access_key }}"
+
+    - name: Create Database Agent Directory
+      file:
+        path: "{{ database_agent_directory }}"
+        state: directory
+        mode: "0755"
+
+    - name: Download & decompress AppDynamics Database Agent
+      unarchive:
+        src: "{{ database_agent_source }}"
+        dest: "{{ database_agent_directory }}"
+        remote_src: no
 
     - name: Create Machine Agent Directory
       file:
