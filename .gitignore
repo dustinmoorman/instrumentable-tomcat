@@ -1,4 +1,4 @@
 .settings/
 inventory.ini
 variables.json
-instrumentable.war
+*.war
