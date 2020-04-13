@@ -76,7 +76,21 @@
       args:
         creates: "/lib/systemd/system/{{ tomcat_systemd_service_name }}.service"
 
-    - name: Send WAR file to remote Tomcat
+    - name: Send MySQL JDBC driver to Tomcat Libs
+      copy:
+        src: "{{ mysql_jdbc_local_source }}"
+        dest: "{{ tomcat_directory }}/latest/lib/"
+        owner: tomcat
+        group: tomcat
+        mode: '0744'
+        force: yes
+
+    - name: Remove previously unpacked WAR
+      file:
+        path: "{{ tomcat_directory }}/latest/webapps/{{ application_name }}"
+        state: absent
+
+    - name: Send new WAR file to remote Tomcat
       copy:
         src: "{{ war_file_local_source }}"
         dest: "{{ tomcat_directory }}/latest/webapps/"
