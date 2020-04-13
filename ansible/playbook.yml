@@ -63,7 +63,7 @@
         Environment=CATALINA_HOME=/opt/tomcat/latest
         Environment=CATALINA_BASE=/opt/tomcat/latest
         Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
-        Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -javaagent:{{ java_agent_directory }}/{{ java_agent_version_directory }}/javaagent.jar'
+        Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -javaagent:{{ java_agent_directory }}/{{ java_agent_version_directory }}/javaagent.jar -Dappdynamics.socket.collection.bci.enable=true'
         UMask=0007
         RestartSec=10
         Restart=always
@@ -313,7 +313,7 @@
         [Service]
         ExecStart={{ netviz_agent_directory }}/bin/start.sh
         KillMode=control-group
-        Restart=on-failure
+        Restart=always
         RestartPreventExitStatus=255
         Type=forking
         TimeoutSec=900
