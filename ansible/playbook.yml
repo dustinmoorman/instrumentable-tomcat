@@ -168,26 +168,26 @@
         dest: "{{ machine_agent_directory }}"
         remote_src: yes
 
-#    - name: Configure Machine Agent in systemd
-#      shell: |
-#        cat << EOF > "/lib/systemd/system/{{ machine_agent_systemd_service_name }}.service"
-#        [Unit]
-#        Description=AppDynamics Machine Agent
-#
-#        [Service]
-#        ExecStart={{ machine_agent_directory }}/jre/bin/java -jar {{ machine_agent_directory }}/machineagent.jar
-#        KillMode=control-group
-#        Restart=on-failure
-#        RestartPreventExitStatus=255
-#        Type=simple
-#        TimeoutSec=900
-#
-#        [Install]
-#        WantedBy=multi-user.target
-#        Alias={{ machine_agent_systemd_service_name}}.service
-#        EOF
-#      args:
-#        creates: "/lib/systemd/system/{{ machine_agent_systemd_service_name }}.service"
+    - name: Configure Machine Agent in systemd
+      shell: |
+        cat << EOF > "/lib/systemd/system/{{ machine_agent_systemd_service_name }}.service"
+        [Unit]
+        Description=AppDynamics Machine Agent
+
+        [Service]
+        ExecStart={{ machine_agent_directory }}/jre/bin/java -jar {{ machine_agent_directory }}/machineagent.jar
+        KillMode=control-group
+        Restart=on-failure
+        RestartPreventExitStatus=255
+        Type=simple
+        TimeoutSec=900
+
+        [Install]
+        WantedBy=multi-user.target
+        Alias={{ machine_agent_systemd_service_name}}.service
+        EOF
+      args:
+        creates: "/lib/systemd/system/{{ machine_agent_systemd_service_name }}.service"
 
     - name: Create Network Agent Directory
       file:
