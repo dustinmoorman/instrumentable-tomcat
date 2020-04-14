@@ -309,6 +309,7 @@
         cat << EOF > "/lib/systemd/system/{{ netviz_agent_systemd_service_name }}.service"
         [Unit]
         Description=AppDynamics Network Agent
+        After=network.target
 
         [Service]
         ExecStart={{ netviz_agent_directory }}/bin/start.sh
