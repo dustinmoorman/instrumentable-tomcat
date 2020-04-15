@@ -188,7 +188,7 @@
       unarchive:
         src: "{{ database_agent_source }}"
         dest: "{{ database_agent_directory }}"
-        remote_src: no
+        remote_src: yes
 
     - name: Write controller host to Database Agent configuration file
       xml:
@@ -260,7 +260,7 @@
 
     - name: Download & decompress AppDynamics Machine Agent
       unarchive:
-        src: "{{ machine_agent_source }}/{{ machine_agent_installer_archive }}"
+        src: "{{ machine_agent_source }}"
         dest: "{{ machine_agent_directory }}"
         remote_src: yes
 
