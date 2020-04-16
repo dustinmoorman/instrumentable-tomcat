@@ -25,6 +25,7 @@
   "machine_agent_installer_archive": "",
   "machine_agent_directory": "/opt/appdynamics/machine-agent",
   "machine_agent_systemd_service_name": "appd-machine-agent",
+  "server_visibility_enabled": "true",
   "netviz_agent_source": "",
   "netviz_agent_installer_archive": "",
   "netviz_agent_directory": "/opt/appdynamics/networkvisibility",

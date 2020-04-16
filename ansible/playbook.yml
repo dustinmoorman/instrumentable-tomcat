@@ -264,6 +264,48 @@
         dest: "{{ machine_agent_directory }}"
         remote_src: yes
 
+    - name: Write controller host to Machine Agent configuration file
+      xml:
+        path: "{{ machine_agent_directory }}/conf/controller-info.xml"
+        xpath: /controller-info/controller-host
+        value: "{{ controller_host }}"
+
+    - name: Write controller port to Machine Agent configuration file
+      xml:
+        path: "{{ machine_agent_directory }}/conf/controller-info.xml"
+        xpath: /controller-info/controller-port
+        value: "{{ controller_port }}"
+
+    - name: Write application name to Machine Agent configuration file
+      xml:
+        path: "{{ machine_agent_directory }}/conf/controller-info.xml"
+        xpath: /controller-info/application-name
+        value: "{{ application_name }}"
+
+    - name: Write tier name to Machine Agent configuration file
+      xml:
+        path: "{{ machine_agent_directory }}/conf/controller-info.xml"
+        xpath: /controller-info/tier-name
+        value: "{{ tier_name }}"
+
+    - name: Write Server Visibility Monitoring setting to Machine Agent configuration file
+      xml:
+        path: "{{ machine_agent_directory }}/conf/controller-info.xml"
+        xpath: /controller-info/sim-enabled
+        value: "{{ server_visibility_enabled }}"
+
+    - name: Write account name to Machine Agent configuration file
+      xml:
+        path: "{{ machine_agent_directory }}/conf/controller-info.xml"
+        xpath: /controller-info/account-name
+        value: "{{ account_name }}"
+
+    - name: Write account access key to Java Agent configuration file
+      xml:
+        path: "{{ machine_agent_directory }}/conf/controller-info.xml"
+        xpath: /controller-info/account-access-key
+        value: "{{ account_access_key }}"
+
     - name: Configure Machine Agent in systemd
       shell: |
         cat << EOF > "/lib/systemd/system/{{ machine_agent_systemd_service_name }}.service"
