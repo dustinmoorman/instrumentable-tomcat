@@ -10,6 +10,13 @@ An application that can make web requests and log the activity to a database.  T
 
 This application should be an analog to any standard Java application, and as additional capabilities need to be tested for proper instrumentation, they will be added.
 
+## Deploying an application to Tomcat
+
+Deploying an application to Tomcat is simple:
+
+1. Place your Jar or War in the `/opt/tomcat/latest/webapps/` directory.
+2. Restart Tomcat with Systemd `sudo service tomcat restart`.
+
 ## System Overview & Environment
 - Ubuntu 18.04
 - Java JDK (8+) (`java-1.8.0-openjdk-amd64`)
