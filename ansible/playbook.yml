@@ -202,24 +202,6 @@
         xpath: /controller-info/controller-port
         value: "{{ controller_port }}"
 
-    - name: Write application name to Database Agent configuration file
-      xml:
-        path: "{{ database_agent_directory }}/conf/controller-info.xml"
-        xpath: /controller-info/application-name
-        value: "{{ application_name }}"
-
-    - name: Write tier name to Database Agent configuration file
-      xml:
-        path: "{{ database_agent_directory }}/conf/controller-info.xml"
-        xpath: /controller-info/tier-name
-        value: "{{ tier_name }}"
-
-    - name: Write node name to Database Agent configuration file
-      xml:
-        path: "{{ database_agent_directory }}/conf/controller-info.xml"
-        xpath: /controller-info/node-name
-        value: "{{ node_name }}"
-
     - name: Write account name to Database Agent configuration file
       xml:
         path: "{{ database_agent_directory }}/conf/controller-info.xml"
