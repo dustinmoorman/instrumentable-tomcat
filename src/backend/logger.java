@@ -24,27 +24,27 @@ public class logger {
       + "target_url VARCHAR(255) NOT NULL, "
       + "date TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
       + ");";
-    
+
     createTableStatement.executeUpdate(createTableDDL);
-    
+
     connection.close();
   }
-  
+
   public void logRequest(HttpServletRequest request, String targetUrl) throws ClassNotFoundException, SQLException {
 
-    Class.forName("com.mysql.cj.jdbc.Driver");  
+    Class.forName("com.mysql.cj.jdbc.Driver");
     Connection connection = DriverManager.getConnection(MYSQL_CONNECTION_STRING);
 
     Statement insertRequestStatement = connection.createStatement();
     String insertRequestDQL = "INSERT INTO `request_logs` ("
       + "remote_host_name, remote_host_ip, target_url) "
-      + "VALUES ( '" 
-      + request.getRemoteHost() + "', '" 
+      + "VALUES ( '"
+      + request.getRemoteHost() + "', '"
       + request.getRemoteAddr() + "', '"
       + targetUrl + "');";
 
     insertRequestStatement.executeUpdate(insertRequestDQL);
-    
+
     connection.close();
   }
 }

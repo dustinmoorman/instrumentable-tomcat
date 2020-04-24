@@ -11,7 +11,7 @@
         <servlet-name>debug</servlet-name>
         <url-pattern>/debug/*</url-pattern>
     </servlet-mapping>
-    
+
     <servlet>
         <servlet-name>default</servlet-name>
         <jsp-file>/default.jsp</jsp-file>
