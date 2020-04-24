@@ -39,8 +39,8 @@ public class call extends HttpServlet {
     String requestUrl = request.getParameter("url");
 
     if (requestUrl == null) {
-    	out.println("Url not provided to servlet, running with the default");
-    	requestUrl = DEFAULT_URL;
+      out.println("Url not provided to servlet, running with the default");
+      requestUrl = DEFAULT_URL;
     } else {
       out.println("Url provided in request.");
     }
@@ -65,7 +65,7 @@ public class call extends HttpServlet {
       }
 
       BufferedReader buffer = new BufferedReader(
-          new InputStreamReader(connection.getInputStream())
+        new InputStreamReader(connection.getInputStream())
       );
 
       String pageOut;
