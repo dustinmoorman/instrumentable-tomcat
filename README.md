@@ -14,7 +14,7 @@ This application should be an analog to any standard Java application, and as ad
 
 Deploying an application to Tomcat is simple:
 
-1. Place your Jar or War in the `/opt/tomcat/latest/webapps/` directory.
+1. Place your War in the `/opt/tomcat/latest/webapps/` directory.
 2. Restart Tomcat with Systemd `sudo service tomcat restart`.
 
 ## System Overview & Environment
