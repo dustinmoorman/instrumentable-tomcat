@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +20,11 @@ public class logger {
 	FileHandler fileHandler = new FileHandler("/tmp/instrumentable-tomcat/runtime.log");
 	log.addHandler(fileHandler);
 
+	SimpleFormatter formatter = new SimpleFormatter();
+	fileHandler.setFormatter(formatter);
+	
+	log.info("Logging ready, Checking database...");
+	
     Class.forName("com.mysql.cj.jdbc.Driver");
 
     Connection connection = DriverManager.getConnection(MYSQL_CONNECTION_STRING);
@@ -33,6 +39,8 @@ public class logger {
       + ");";
 
     createTableStatement.executeUpdate(createTableDDL);
+    
+	log.info("Database ready, let's go!");
 
     connection.close();
   }
@@ -41,6 +49,13 @@ public class logger {
 
     Class.forName("com.mysql.cj.jdbc.Driver");
     Connection connection = DriverManager.getConnection(MYSQL_CONNECTION_STRING);
+    
+    log.info("Request initiated from " 
+      + request.getRemoteHost()
+      + " ("
+      + request.getRemoteAddr()
+      + ") against target: "
+      + targetUrl);
 
     Statement insertRequestStatement = connection.createStatement();
     String insertRequestDQL = "INSERT INTO `request_logs` ("
