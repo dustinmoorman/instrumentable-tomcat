@@ -20,13 +20,13 @@ public class logger {
   
   public logger() throws ClassNotFoundException, SQLException, IOException {
 	  
-	FileHandler fileHandler = new FileHandler("/tmp/instrumentable-tomcat/runtime.log");
-	log.addHandler(fileHandler);
+    FileHandler fileHandler = new FileHandler("/tmp/instrumentable-tomcat/runtime.log");
+    log.addHandler(fileHandler);
 
-	SimpleFormatter formatter = new SimpleFormatter();
-	fileHandler.setFormatter(formatter);
+    SimpleFormatter formatter = new SimpleFormatter();
+    fileHandler.setFormatter(formatter);
 	
-	log.info("Logging ready, Checking database...");
+    log.info("Logging ready, Checking database...");
 	
     Class.forName(MYSQL_JDBC_DRIVER_STRING);
 
@@ -43,7 +43,7 @@ public class logger {
 
     createTableStatement.executeUpdate(createTableDDL);
     
-	log.info("Database ready, let's go!");
+    log.info("Database ready, let's go!");
 
     connection.close();
   }
