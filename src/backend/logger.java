@@ -12,7 +12,10 @@ import java.sql.Statement;
 import javax.servlet.http.HttpServletRequest;
 
 public class logger {
+  
   private static final String MYSQL_CONNECTION_STRING = "jdbc:mysql://root:appdynam1cs@localhost:3306/instrumentdata?serverTimezone=America/Chicago&useJDBCCompliantTimezoneShift=true";
+  private static final String MYSQL_JDBC_DRIVER_STRING = "com.mysql.cj.jdbc.Driver";
+  
   private static Logger log = Logger.getLogger("log");
   
   public logger() throws ClassNotFoundException, SQLException, IOException {
@@ -25,7 +28,7 @@ public class logger {
 	
 	log.info("Logging ready, Checking database...");
 	
-    Class.forName("com.mysql.cj.jdbc.Driver");
+    Class.forName(MYSQL_JDBC_DRIVER_STRING);
 
     Connection connection = DriverManager.getConnection(MYSQL_CONNECTION_STRING);
 
@@ -47,7 +50,7 @@ public class logger {
 
   public void logRequest(HttpServletRequest request, String targetUrl) throws ClassNotFoundException, SQLException {
 
-    Class.forName("com.mysql.cj.jdbc.Driver");
+    Class.forName(MYSQL_JDBC_DRIVER_STRING);
     Connection connection = DriverManager.getConnection(MYSQL_CONNECTION_STRING);
     
     log.info("Request initiated from " 
